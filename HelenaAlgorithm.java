@@ -10,7 +10,7 @@ public class HelenaAlgorithm implements Operator{
 	// Helena's Algorithm
 	// Not as good as the others, since I spent most of my time on the graphics
 	// (and procrastinated)
-	// I have three factors to choose a direction: 
+	// I have four factors to choose a direction: 
 	//   1) don't immediately die (check for available space directly ahead)
 	//   2) get food (minimize distance to it)
 	//	 3) kill other snakes (go to spot in front of their heads)
