@@ -1,4 +1,4 @@
-package com.caibear.snake;
+package game;
 
 public interface Creature {
 	void move();

@@ -1,4 +1,4 @@
-package com.caibear.snake;
+package game;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -76,6 +76,10 @@ public class Snake implements Creature {
 	
 	public int getX() {
 		return this.head.x;
+	}
+
+	public boolean isAlive() {
+		return this.alive;
 	}
 	
 	public int getY() {

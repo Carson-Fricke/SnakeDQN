@@ -1,56 +1,95 @@
+package janet;
 
-public class RMSprop extends Optimizer{
+
+public class RMSprop extends Optimizer {
 	
-	private float eta;
+	// here be problems
+	
+
+	private double eta;
 	private int batch;
 	private int parsedW;
 	private int parsedB;
-	private float[][] wGrads;
-	private float[][] wUpdates;
-	private float[] bGrads;
-	private float[] bUpdates;
+	private double[][] wGrads;
+	private double[][] wUpdates;
+	private double[][] wZeros;
+	private double[] bGrads;
+	private double[] bUpdates;
+	private double[] bZeros;
+
 	
 	
-	public RMSprop(float eta, int batch) {
+	public RMSprop(double eta, int batchSize) {
 		this.eta = eta;
-		this.batch = batch;
+		this.batch = batchSize;
 		this.parsedW = -1;
 		this.parsedB = -1;
-		this.wGrads = new float[0][0];
-		this.wUpdates = new float[0][0];
-		this.bGrads = new float[0];
-		this.bUpdates = new float[0];
+		this.wGrads = new double[0][0];
+		this.wUpdates = new double[0][0];
+		this.bGrads = new double[0];
+		this.bUpdates = new double[0];
+		
+		this.wZeros= new double[0][0];
+		this.bZeros = new double[0];
 	}
 	
+
+	// problems here
 	@Override
-	float[][] optimizeWeights(float[][] grads) {
-		if (parsedW == -1) {
-			this.wGrads = new float[grads.length][grads[0].length];
-			this.wUpdates = new float[grads.length][grads[0].length];
+	double[][] optimizeWeights(double[][] grads) {
+		if (this.parsedW == -1) {
+			this.wGrads = new double[grads.length][grads[0].length];
+			this.wUpdates = new double[grads.length][grads[0].length];
+			this.wZeros = new double[grads.length][grads[0].length];
+			this.parsedW = 0;
+			for (int i = 0; i < grads.length; i++) {
+				for (int j = 0; j < grads[0].length; j++) {
+					this.wGrads[i][j] = 0.0;
+					this.wUpdates[i][j] = 1.0;
+					this.wZeros[i][j] = 0.0;
+				}
+			}
+
 		}
 		
 		this.parsedW++;
 		this.wGrads = Util.add(this.wGrads, grads);
 		
 		if (this.batch == this.parsedW) {
-			this.wUpdates = Util.add(Util.mul(this.wUpdates, 0.9f), Util.mul(Util.mul(grads, grads), 0.1f));
+			//this.wUpdates = Util.add(Util.mul(this.wUpdates, 0.9), Util.mul(Util.mul(this.wGrads, this.wGrads), 0.1));
 
-			float[][] out = Util.mul(Util.div(this.wGrads, Util.sqrt(Util.add(this.wUpdates, 0.000001f))), this.eta);
+			//double[][] out = Util.div(Util.mul(Util.div(this.wGrads, Util.sqrt(Util.add(this.wUpdates, 0.1))), this.eta), this.batch);
+			double[][] out = Util.div(Util.mul(this.wGrads, this.eta), this.batch);
 			
-			this.wGrads = new float[grads.length][grads[0].length];
+			for (int i = 0; i < this.wGrads.length; i++) {
+				for (int j = 0; j < this.wGrads[i].length; j++) {
+					this.wGrads[i][j] = 0;
+				}
+			}
+
 			this.parsedW = 0;
 			return out;
 		} else {
-			return new float[grads.length][grads[0].length];
+			return this.wZeros;
 		}
 		
 	}
 
+	// problems here
 	@Override
-	float[] optimizeBiases(float[] grads) {
-		if (parsedB == -1) {
-			this.bGrads = new float[grads.length];
-			this.bUpdates = new float[grads.length];
+	double[] optimizeBiases(double[] grads) {
+		
+		if (this.parsedB == -1) {
+			this.bGrads = new double[grads.length];
+			this.bUpdates = new double[grads.length];
+			this.bZeros = new double[grads.length];
+			this.parsedB = 0;
+			for (int i = 0; i < grads.length; i++) {
+				this.bGrads[i] = 0.0;
+				this.bUpdates[i] = 1.0;
+				this.bZeros[i] = 0.0;
+				
+			}
 		}
 		
 		
@@ -58,18 +97,22 @@ public class RMSprop extends Optimizer{
 		this.bGrads = Util.add(this.bGrads, grads);
 		
 		if (this.batch == this.parsedB) {
-			this.bUpdates = Util.add(Util.mul(this.bUpdates, 0.9f), Util.mul(Util.mul(grads, grads), 0.1f));
 			
-			float[] out = Util.mul(Util.div(this.bGrads, Util.sqrt(Util.add(this.bUpdates, 0.000001f))), this.eta);
+			//this.bUpdates = Util.add(Util.mul(this.bUpdates, 0.9), Util.mul(Util.mul(this.bGrads, this.bGrads), 0.1));
+			//double[] out = Util.div(Util.mul(Util.div(this.bGrads, Util.sqrt(Util.add(this.bUpdates, 0.000001))), this.eta), this.batch);
+			//System.out.println("bu: " + this.bUpdates[0] + " bg*bg: " + Math.sqrt(this.bGrads[0] * this.bGrads[0] + 0.001));
+			double[] out = Util.div(Util.mul(this.bGrads, this.eta), this.batch);
+
+			for (int i = 0; i < this.bGrads.length; i++) {
+				this.bGrads[i] = 0;
+			}
 			
-			this.bGrads = new float[grads.length];
 			this.parsedB = 0;
-//			System.out.println(out[0]);
 			
 			return out;
 		} else {
 			
-			return new float[grads.length];
+			return this.bZeros;
 		}
 	}
 

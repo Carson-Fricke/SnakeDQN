@@ -1,11 +1,11 @@
-package com.caibear.snake;
+package game;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Setting {
-	public final int fps;
+	public int fps;
 	
-	public final double ups;
+	public double ups;
 	
 	private List<Operator> operators = new ArrayList<>();
 	
@@ -18,7 +18,7 @@ public class Setting {
 	private int lengthPerFood = 3;
 	
 	public Setting() {
-		this(60, 10D);
+		this(60, 10000D);
 	}
 	
 	public Setting(int fps, double ups) {

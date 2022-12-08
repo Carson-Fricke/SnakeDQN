@@ -1,4 +1,4 @@
-package com.caibear.snake;
+package game;
 import java.util.Deque;
 import java.util.LinkedList;
 

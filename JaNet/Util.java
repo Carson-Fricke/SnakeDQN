@@ -1,8 +1,8 @@
-
+package janet;
 public class Util {
 	
-	public static float[][] transpose(float[][] x) {
-		float[][] out = new float[x[0].length][x.length];
+	public static double[][] transpose(double[][] x) {
+		double[][] out = new double[x[0].length][x.length];
 		
 		for (int i = 0; i < x.length; i++) {
 			for (int j = 0; j < x[0].length; j++) {
@@ -13,10 +13,10 @@ public class Util {
 		return out;
 	}
 	
-	public static float[] dot(float[] x, float[][] y) {
+	public static double[] dot(double[] x, double[][] y) {
 		
-		float[] out = new float[y.length];
-		float sum = 0;
+		double[] out = new double[y.length];
+		double sum = 0;
 		for (int i = 0; i < y.length; i++) {
 			sum = 0;
 			for (int j = 0; j < y[0].length; j++) {
@@ -28,8 +28,8 @@ public class Util {
 		return out;
 	}
 
-	public static float[][] outer(float[] x, float[] y) {
-		float[][] out = new float[x.length][y.length];
+	public static double[][] outer(double[] x, double[] y) {
+		double[][] out = new double[x.length][y.length];
 		
 		for (int i = 0; i < x.length; i++) {
 			for (int j = 0; j < y.length; j++) {
@@ -40,32 +40,32 @@ public class Util {
 		return out;
 	}
 
-	public static float[] log(float[] x) {
-		float[] out = x.clone();
+	public static double[] log(double[] x) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
-			out[i] = (float) Math.log(x[i]);
+			out[i] = (double) Math.log(x[i]);
 		}
 		return out;
 	}
 	
-	public static float[] sqrt(float[] x) {
-		float[] out = x.clone();
+	public static double[] sqrt(double[] x) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
-			out[i] = (float) Math.sqrt(x[i]);
+			out[i] = (double) Math.sqrt(x[i]);
 		}
 		return out;
 	}
 	
-	public static float[][] sqrt(float[][] x) {
-		float[][] out = x.clone();
+	public static double[][] sqrt(double[][] x) {
+		double[][] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] = sqrt(x[i]);
 		}
 		return out;
 	}
 
-	public static float[] clip(float[] x, float min, float max) {
-		float[] out = new float[x.length];
+	public static double[] clip(double[] x, double min, double max) {
+		double[] out = new double[x.length];
 		for (int i = 0; i < x.length; i++) {
 			if (x[i] > max) {
 				out[i] = max;
@@ -78,146 +78,146 @@ public class Util {
 		return out;
 	}
 	
-	public static float[] add(float[] x, float[] y) {
-		float[] out = x.clone();
+	public static double[] add(double[] x, double[] y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] += y[i];
 		}
 		return out;
 	}
 	
-	public static float[] sub(float[] x, float[] y) {
-		float[] out = x.clone();
+	public static double[] sub(double[] x, double[] y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] -= y[i];
 		}
 		return out;
 	}
 	
-	public static float[] mul(float[] x, float[] y) {
-		float[] out = x.clone();
+	public static double[] mul(double[] x, double[] y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] *= y[i];
 		}
 		return out;
 	}
 	
-	public static float[] div(float[] x, float[] y) {
-		float[] out = x.clone();
+	public static double[] div(double[] x, double[] y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] = y[i];
 		}
 		return out;
 	}
 	
-	public static float[] add(float[] x, float y) {
-		float[] out = x.clone();
+	public static double[] add(double[] x, double y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] += y;
 		}
 		return out;
 	}
 	
-	public static float[] sub(float[] x, float y) {
-		float[] out = x.clone();
+	public static double[] sub(double[] x, double y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] -= y;
 		}
 		return out;
 	}
 	
-	public static float[] mul(float[] x, float y) {
-		float[] out = x.clone();
+	public static double[] mul(double[] x, double y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] *= y;
 		}
 		return out;
 	}
 	
-	public static float[] div(float[] x, float y) {
-		float[] out = x.clone();
+	public static double[] div(double[] x, double y) {
+		double[] out = x.clone();
 		for (int i = 0; i < x.length; i++) {
 			out[i] /= y;
 		}
 		return out;
 	}
 	
-	public static float[] sub(float x, float[] y) {
-		float[] out = y.clone();
+	public static double[] sub(double x, double[] y) {
+		double[] out = y.clone();
 		for (int i = 0; i < y.length; i++) {
 			out[i] = x - y[i];
 		}
 		return out;
 	}
 	
-	public static float[] div(float x, float[] y) {
-		float[] out = y.clone();
+	public static double[] div(double x, double[] y) {
+		double[] out = y.clone();
 		for (int i = 0; i < y.length; i++) {
 			out[i] = x / y[i];
 		}
 		return out;
 	}
 
-	public static float[][] add(float[][] x, float y) {
-		float[][] out = x.clone();
+	public static double[][] add(double[][] x, double y) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = add(out[i], y);
+			out[i] = add(x[i], y);
 		}
 		return out;
 	}
 	
-	public static float[][] sub(float[][] x, float y) {
-		float[][] out = x.clone();
+	public static double[][] sub(double[][] x, double y) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = sub(out[i], y);
+			out[i] = sub(x[i], y);
 		}
 		return out;
 	}
 	
-	public static float[][] mul(float[][] x, float y) {
-		float[][] out = x.clone();
+	public static double[][] mul(double[][] x, double y) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = mul(out[i], y);
+			out[i] = mul(x[i], y);
 		}
 		return out;
 	}
 	
-	public static float[][] div(float[][] x, float y) {
-		float[][] out = x.clone();
+	public static double[][] div(double[][] x, double y) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = div(out[i], y);
+			out[i] = div(x[i], y);
 		}
 		return out;
 	}
 	
-	public static float[][] add(float[][] x, float y[][]) {
-		float[][] out = x.clone();
+	public static double[][] add(double[][] x, double y[][]) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = add(out[i], y[i]);
+			out[i] = add(x[i], y[i]);
 		}
 		return out;
 	}
 	
-	public static float[][] sub(float[][] x, float y[][]) {
-		float[][] out = x.clone();
+	public static double[][] sub(double[][] x, double y[][]) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = sub(out[i], y[i]);
+			out[i] = sub(x[i], y[i]);
 		}
 		return out;
 	}
 	
-	public static float[][] mul(float[][] x, float y[][]) {
-		float[][] out = x.clone();
+	public static double[][] mul(double[][] x, double y[][]) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = mul(out[i], y[i]);
+			out[i] = mul(x[i], y[i]);
 		}
 		return out;
 	}
 	
-	public static float[][] div(float[][] x, float y[][]) {
-		float[][] out = x.clone();
+	public static double[][] div(double[][] x, double y[][]) {
+		double[][] out = new double[x.length][x[0].length];
 		for (int i = 0; i < x.length; i++) {
-			out[i] = div(out[i], y[i]);
+			out[i] = div(x[i], y[i]);
 		}
 		return out;
 	}

@@ -1,11 +1,14 @@
-package com.caibear.snake;
+package game;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import snakedqn.DQNAgent;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel implements Runnable {
@@ -42,9 +45,10 @@ public class Board extends JPanel implements Runnable {
 	}
 	
 	public void init() {
+		setPreferredSize(new Dimension(1000, 500));
 		setFocusable(true);
 		this.creatures = new ArrayList<>();
-		
+		this.tiles = new Tile[this.setting.getWidth()][this.setting.getHeight()];
 		List<Operator> operators = this.setting.getOperators();
 		int len = operators.size();
 		int space = this.tiles.length / len;
@@ -103,6 +107,15 @@ public class Board extends JPanel implements Runnable {
 			} catch (InterruptedException e) {
 				;
 			}
+
+			this.running = false;
+
+			for (Creature a : this.creatures) {
+				if (a instanceof Snake) {
+					this.running = this.running || ((Snake) a).isAlive();
+				}
+			}
+
 		}
 	}
 	
@@ -114,10 +127,20 @@ public class Board extends JPanel implements Runnable {
 		for (Creature a : this.creatures) {
 			a.move();
 		}
+
+		DQNAgent.populateReward();
+		DQNAgent.populateNextState();
+		DQNAgent.addTransition();
+
 	}
 	
 	public Tile get(int x, int y) {
 		return this.tiles[x][y];
+	}
+
+	public Tile[][] getTiles() 
+	{
+		return this.tiles;
 	}
 	
 	public void set(int x, int y, Tile t) {
@@ -132,6 +155,14 @@ public class Board extends JPanel implements Runnable {
 		return this.tiles[0].length;
 	}
 	
+	public boolean isRunning() {
+		return this.running;
+	}
+
+	public void setUps(int arg) {
+		this.setting.ups = arg;
+	}
+
 	public boolean validPosition(int x, int y) {
 		return x >= 0 && x < this.tiles.length && y >= 0 && y < this.tiles[0].length;
 	}

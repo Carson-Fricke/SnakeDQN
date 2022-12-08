@@ -1,4 +1,4 @@
-package com.caibear.snake;
+package game;
 
 public enum Direction {
 	RIGHT(1, 0),

@@ -1,11 +1,11 @@
-import java.util.Arrays;
+package janet;
 import java.util.Random;
 
 public class Dense extends Layer {
 	
-	private float[] activation(float[] x, boolean deriv) {
+	private double[] activation(double[] x, boolean deriv) {
 		
-		float[] out = new float[x.length];
+		double[] out = new double[x.length];
 		if (deriv) {
 			for (int i = 0; i < x.length; i++) {
 				if (x[i] >= 0) {
@@ -30,39 +30,42 @@ public class Dense extends Layer {
 		
 		Random r = new Random();
 		
-		this.sums = new float[size];
-		this.activations = new float[size];
+		this.sums = new double[size];
+		this.activations = new double[size];
 		
-		this.weights = new float[size][inSize];
-		this.biases = new float[size];
+		this.weights = new double[size][inSize];
+		this.biases = new double[size];
 		
 		for(int i = 0; i < this.weights.length; i++) {
-			this.biases[i] = (float) (r.nextGaussian());
+			this.biases[i] = r.nextGaussian() / inSize;
 			for(int j = 0; j < this.weights[0].length; j++) {
-				this.weights[i][j] = (float) (r.nextGaussian());
+				this.weights[i][j] = r.nextGaussian() * Math.sqrt(2.0 / (size + inSize));
 				
 			}
 		}
 		
 		this.optimizer = optimizer;
+		this.optimizer.l = this;
 	}
 	
-	public float[] forward(float[] x) {
+	public double[] forward(double[] lastLayerActivations) {
 		
-		this.sums = Util.add(Util.dot(x, this.weights), this.biases);
+		this.sums = Util.add(Util.dot(lastLayerActivations, this.weights), this.biases);
 		this.activations = activation(this.sums, false);
 		return this.activations;
 		
 	}
 	
-	public float[] backward(float[] x, float[] next) {
+	public double[] backward(double[] dlda, double[] lastLayerActivations) {
+		// THE PROBLEM IS IN RMSPROP
+		double[] dlds = Util.mul(dlda, activation(this.sums, true));
+		double[] dldlla = Util.dot(dlds, Util.transpose(this.weights));
 		
-		float[] error = Util.mul(x, activation(this.sums, true));
-		float[] out = Util.dot(error, Util.transpose(this.weights));
-		this.weights = Util.sub(this.weights, this.optimizer.optimizeWeights(Util.outer(error, next)));
-		this.biases = Util.sub(this.biases, this.optimizer.optimizeBiases(error));
+		this.weights = Util.sub(this.weights, this.optimizer.optimizeWeights(Util.outer(dlds, lastLayerActivations)));
+
+		this.biases = Util.sub(this.biases, this.optimizer.optimizeBiases(dlds));
 		
-		return out;
+		return dldlla;
 	}
 	
 }

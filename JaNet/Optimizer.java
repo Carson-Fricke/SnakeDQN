@@ -1,8 +1,13 @@
+package janet;
 
-abstract class Optimizer {
+import java.io.Serializable;
 
-	abstract float[][] optimizeWeights(float[][] grads);
-	abstract float[] optimizeBiases(float[] grads);
+abstract class Optimizer implements Serializable {
+
+	public Layer l;
+
+	abstract double[][] optimizeWeights(double[][] grads);
+	abstract double[] optimizeBiases(double[] grads);
 	
 	
 }

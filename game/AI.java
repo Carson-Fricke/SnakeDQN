@@ -1,4 +1,4 @@
-package com.caibear.snake;
+package game;
 
 public class AI implements Operator {
 	private Snake snake;

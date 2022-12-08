@@ -1,17 +1,21 @@
-abstract class Layer {	
+package janet;
+
+import java.io.Serializable;
+
+public abstract class Layer  implements Serializable {	
 	
-	protected float[][] weights;
-	protected float[] biases;
+	public double[][] weights;
+	public double[] biases;
 	
-	protected float[] sums;
-	protected float[] activations;
+	public double[] sums;
+	public double[] activations;
 	
-	protected Optimizer optimizer;
+	public Optimizer optimizer;
 	
-	abstract float[] forward(float[] x);
-	abstract float[] backward(float[] x, float[] next);
+	abstract double[] forward(double[] lastLayerActivations);
+	abstract double[] backward(double[] dlda, double[] lastLayerActivations);
 	
-//	abstract float[] activation(float[] x, boolean deriv);
+//	abstract double[] activation(double[] x, boolean deriv);
 	
 	
 	
