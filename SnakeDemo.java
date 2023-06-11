@@ -10,7 +10,7 @@ class SnakeDemo {
 
         Setting s = new Setting(100, 6);
         Network agentNet = DQNAgent.loadNetwork("SnakeAgentSave.network");
-        DQNAgent agent = new DQNAgent(agentNet, 15, 15);
+        DQNAgent agent = new DQNAgent(agentNet, 17, 17);
         //DQNAgent agent = new DQNAgent(15, 15, 4, 120, 0.001, 3000);
         DQNAgent.train = false;
         s.setWidth(25);
