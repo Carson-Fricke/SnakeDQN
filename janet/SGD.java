@@ -1,7 +1,7 @@
 package janet;
 
 
-public class RMSprop extends Optimizer {
+public class SGD extends Optimizer {
 	
 	// here be problems
 	
@@ -19,7 +19,7 @@ public class RMSprop extends Optimizer {
 
 	
 	
-	public RMSprop(double eta, int batchSize) {
+	public SGD(double eta, int batchSize) {
 		this.eta = eta;
 		this.batch = batchSize;
 		this.parsedW = -1;

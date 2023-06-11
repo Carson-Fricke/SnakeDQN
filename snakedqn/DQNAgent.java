@@ -33,7 +33,7 @@ public class DQNAgent implements game.Operator, Serializable {
     private static int trainingStepsDone = 0;
     private static double epsilonStart = 1.0;
     private static double epsilonFinish = 0.1;
-    private static double epsilonDecay = 200;
+    private static double epsilonDecay = 100;
 
     private static int sampleSize = 10000;
     // keep low
@@ -111,15 +111,15 @@ public class DQNAgent implements game.Operator, Serializable {
 
         
         Layer[] layers = new Layer[numHiddenLayers+2];
-        layers[0] = new Dense(camX * camY + 5, 0, new RMSprop(eta, batchSize));
+        layers[0] = new Dense(camX * camY + 5, 0, new SGD(eta, batchSize));
         
         int lastLayerWidth = camX * camY + 5;
         
         for (int i = 1; i <= numHiddenLayers; i++) {
-            layers[i] = new Dense(layerWidth, lastLayerWidth, new RMSprop(eta, batchSize));
+            layers[i] = new Dense(layerWidth, lastLayerWidth, new SGD(eta, batchSize));
             lastLayerWidth = layerWidth;
         }
-        layers[numHiddenLayers + 1] = new Output(3, lastLayerWidth, new RMSprop(eta, batchSize));
+        layers[numHiddenLayers + 1] = new Output(3, lastLayerWidth, new SGD(eta, batchSize));
 
         agentNetwork = new Network(layers);
 

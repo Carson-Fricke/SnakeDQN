@@ -9,9 +9,9 @@ class SnakeTrain {
 		
         Setting s = new Setting(1000,100000);
 
-        //DQNAgent agent = new DQNAgent(15, 15, 4, 120, 0.001, 3000);
-        Network ln = DQNAgent.loadNetwork("SnakeAgentSave5.network");
-        DQNAgent agent = new DQNAgent(ln, 15, 15);
+        DQNAgent agent = new DQNAgent(17, 17, 5, 120, 0.001, 3000);
+        //Network ln = DQNAgent.loadNetwork("SnakeAgentSave.network");
+        //DQNAgent agent = new DQNAgent(ln, 15, 15);
         DQNAgent.train = true;
         s.setWidth(25);
         s.setHeight(25);
