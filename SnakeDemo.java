@@ -5,13 +5,13 @@ import janet.*;
 
 class SnakeDemo {
 
+    public static final String loadPath = "SnakeAgentSave.network";
 
     public static void main(String[] args) {
 
         Setting s = new Setting(100, 6);
-        Network agentNet = DQNAgent.loadNetwork("SnakeAgentSave.network");
+        Network agentNet = DQNAgent.loadNetwork(loadPath);
         DQNAgent agent = new DQNAgent(agentNet, 17, 17);
-        //DQNAgent agent = new DQNAgent(15, 15, 4, 120, 0.001, 3000);
         DQNAgent.train = false;
         s.setWidth(25);
         s.setHeight(25);

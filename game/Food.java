@@ -36,7 +36,7 @@ public class Food implements Tile {
 
 	@Override
 	public void draw(Graphics g, int x, int y, int width, int height) {
-		g.setColor(this.owner.getColor().brighter());
+		g.setColor(this.owner.getColor().darker());
 		g.fillRect(x, y, width, height);
 		g.setColor(Color.BLACK);
 		g.drawRect(x, y, width, height);

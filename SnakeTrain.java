@@ -5,13 +5,26 @@ import janet.*;
 
 class SnakeTrain {
 
+    public static final boolean newModel = false;
+    public static final String savePath = "SnakeAgentSave.network";
+    public static final int gamesPerSave = 2000;
+    public static final boolean demonstrate = false;
+
+
+
     public static void main(String[] args) {
 		
         Setting s = new Setting(1000,100000);
-
-        DQNAgent agent = new DQNAgent(17, 17, 5, 120, 0.001, 3000);
-        //Network ln = DQNAgent.loadNetwork("SnakeAgentSave.network");
-        //DQNAgent agent = new DQNAgent(ln, 15, 15);
+        
+        DQNAgent agent;
+        if (newModel) {
+            agent = new DQNAgent(17, 17, 5, 120, 0.001, 3000);
+        } else {
+            Network ln = DQNAgent.loadNetwork("SnakeAgentSave.network");
+            agent = new DQNAgent(ln, 17, 17);
+        }
+        
+        
         DQNAgent.train = true;
         s.setWidth(25);
         s.setHeight(25);
@@ -26,11 +39,13 @@ class SnakeTrain {
                 
                 games++;
 
-                if (games % 2000 == 0) {
-                    agent.print = true;
-                    app.getBoard().setUps(6);
-                    DQNAgent.saveNetwork("SnakeAgentSave.network");
-                } else if (games % 2000 == 1) {
+                if (games % gamesPerSave == 0) {
+                    if (demonstrate) {
+                        agent.print = true;
+                        app.getBoard().setUps(6);
+                    }
+                    DQNAgent.saveNetwork(savePath);
+                } else if (games % gamesPerSave == 1) {
                     agent.print = false;
                     app.getBoard().setUps(1000000);
                 }

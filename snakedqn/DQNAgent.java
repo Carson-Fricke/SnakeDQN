@@ -31,8 +31,8 @@ public class DQNAgent implements game.Operator, Serializable {
     private static ReplayMemory memory = new ReplayMemory();
 
     private static int trainingStepsDone = 0;
-    private static double epsilonStart = 1.0;
-    private static double epsilonFinish = 0.1;
+    private static double epsilonStart = 0.05;
+    private static double epsilonFinish = 0.01;
     private static double epsilonDecay = 100;
 
     private static int sampleSize = 10000;
