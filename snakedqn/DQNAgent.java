@@ -26,21 +26,22 @@ public class DQNAgent implements game.Operator, Serializable {
     public static Network previousNetwork;
 
     public static boolean train = true;
-    private static Random r = new Random(10);
+    private static Random r = new Random(15);
     private static ArrayList<DQNAgent> agentList = new ArrayList<DQNAgent>();
     private static ReplayMemory memory = new ReplayMemory();
 
     private static int trainingStepsDone = 0;
-    private static double epsilonStart = 0.05;
-    private static double epsilonFinish = 0.01;
-    private static double epsilonDecay = 100;
+    private static double epsilonStart = 0.5;
+    private static double epsilonFinish = 0.05;
+    private static double epsilonDecay = 30;
+    private static int batchSize = 10000;
 
     private static int sampleSize = 10000;
     // keep low
     private static int networkUpdateDelay = 5;
 
     // VERY IMPORTANT - don't set too high, this is the lookahead rate
-    private static double gamma = 0.5;
+    private static double gamma = 0.3;
 
     public boolean print = false;
 
@@ -105,7 +106,7 @@ public class DQNAgent implements game.Operator, Serializable {
 
 
     // for all intents and purposes, camX and camY ought to be odd numbers so the snakes head in in the middle
-    public DQNAgent(int camX, int camY, int numHiddenLayers, int layerWidth, double eta, int batchSize) {
+    public DQNAgent(int camX, int camY, int numHiddenLayers, int layerWidth, double eta) {
         this.camWidth = camX;
         this.camHeight = camY;
 
@@ -130,6 +131,8 @@ public class DQNAgent implements game.Operator, Serializable {
         agentNetwork = agent;
         agentList.add(this);
 
+        agentNetwork.setBatchSize(batchSize);
+
         this.camWidth = camX;
         this.camHeight = camY;
     }
@@ -138,6 +141,8 @@ public class DQNAgent implements game.Operator, Serializable {
         agentNetwork = Network.loadNetwork(loadPath);
         agentList.add(this);
         
+        agentNetwork.setBatchSize(batchSize);
+
         this.camWidth = camX;
         this.camHeight = camY;
     }
@@ -291,7 +296,7 @@ public class DQNAgent implements game.Operator, Serializable {
                         return;
                     }
                 case RIGHT:
-                    if (xd < 0) {
+                    if (xd > 0) {
                         this.reward = 0.9;
                         return;
                     }

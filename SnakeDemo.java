@@ -9,7 +9,7 @@ class SnakeDemo {
 
     public static void main(String[] args) {
 
-        Setting s = new Setting(100, 6);
+        Setting s = new Setting(100, 10);
         Network agentNet = DQNAgent.loadNetwork(loadPath);
         DQNAgent agent = new DQNAgent(agentNet, 17, 17);
         DQNAgent.train = false;
@@ -19,12 +19,9 @@ class SnakeDemo {
         
 
         Application app = new Application(s);
-    
-        app.getBoard().setUps(6);
 
         while (true) {
             if (app.allDead() && !app.getBoard().isRunning()) {
-                app.getBoard().setUps(6);
 
                 agent.print = true;
                 

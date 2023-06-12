@@ -37,6 +37,12 @@ public class Network implements Serializable {
 		this.layers = layers;
 	}
 	
+	public void setBatchSize(int newBatch) {
+		for (Layer l : this.layers) {
+			l.optimizer.updateBatchSize(newBatch);
+		}
+	}
+
 	public double[] forward(double[] x) {
 		
 		double[] carry = x.clone();

@@ -7,7 +7,7 @@ class SnakeTrain {
 
     public static final boolean newModel = false;
     public static final String savePath = "SnakeAgentSave.network";
-    public static final int gamesPerSave = 2000;
+    public static final int gamesPerSave = 500;
     public static final boolean demonstrate = false;
 
 
@@ -18,7 +18,7 @@ class SnakeTrain {
         
         DQNAgent agent;
         if (newModel) {
-            agent = new DQNAgent(17, 17, 5, 120, 0.001, 3000);
+            agent = new DQNAgent(17, 17, 5, 120, 0.001);
         } else {
             Network ln = DQNAgent.loadNetwork("SnakeAgentSave.network");
             agent = new DQNAgent(ln, 17, 17);
@@ -45,6 +45,7 @@ class SnakeTrain {
                         app.getBoard().setUps(6);
                     }
                     DQNAgent.saveNetwork(savePath);
+                    System.out.println("Agent Saved");
                 } else if (games % gamesPerSave == 1) {
                     agent.print = false;
                     app.getBoard().setUps(1000000);

@@ -7,7 +7,6 @@ public class SGD extends Optimizer {
 	
 
 	private double eta;
-	private int batch;
 	private int parsedW;
 	private int parsedB;
 	private double[][] wGrads;
@@ -16,8 +15,6 @@ public class SGD extends Optimizer {
 	private double[] bGrads;
 	private double[] bUpdates;
 	private double[] bZeros;
-
-	
 	
 	public SGD(double eta, int batchSize) {
 		this.eta = eta;
@@ -32,7 +29,6 @@ public class SGD extends Optimizer {
 		this.wZeros= new double[0][0];
 		this.bZeros = new double[0];
 	}
-	
 
 	// problems here
 	@Override

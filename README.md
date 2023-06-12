@@ -4,9 +4,9 @@ SnakeDQN
 Snake Deep Q Network (DQN) is an artificial intelligence agent capable of playing the classic game of Snake using reinforcement learning techniques, all built from scratch in Java. The project involves training a neural network to approximate the Q-values, which represent the expected rewards of taking specific actions as a function of state. The DQN agent learns to navigate the game environment, avoiding obstacles and collecting food, by interacting with the game and updating its Q-values through a combination of exploration and exploitation over many iterations.
 ## Getting Started
 
-Simply download the code and run the demo to see a pretrained model in action.
+Simply download the code and run SnakeDemo.java to see a pretrained model in action.
 
-To train a new model
+To train a new model, set the final variable "newModel" in SnakeTrain.java to true, otherwise it will continue to train the current model.
 
 ## Implementation
 The neural network is built on top naive implementations of a linear algebra operations found in Util.java. It only supports the ReLU activation function out of the box. The output layer has a linear output, IE no activation function because this allows for more flexibility with the reward function described later. 
@@ -17,3 +17,4 @@ The DQN agent "sees" the board as a 2D array (flattened to one dimention) rotate
 
 The DQN is rewarded whenever it eats a food, and is punished whenever it dies. It recieves a smaller reward when moving towards the food, and a small punishment when moving away from it. 
 
+The biggest improves to this model would be to switch from using dense layers to convolutional layers, to implement nesterov accelerated gradient, and to flesh out a more detailed reward function.
