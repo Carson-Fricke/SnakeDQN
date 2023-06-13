@@ -9,7 +9,7 @@ class SnakeDemo {
 
     public static void main(String[] args) {
 
-        Setting s = new Setting(100, 10);
+        Setting s = new Setting(100, 20);
         Network agentNet = DQNAgent.loadNetwork(loadPath);
         DQNAgent agent = new DQNAgent(agentNet, 17, 17);
         DQNAgent.train = false;
